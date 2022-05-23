@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
             val inputEmail = binding.emailEdt.text.toString()
             val inputPw = binding.passwordEdt.text.toString()
 
+            ServerUtil.postRequestLogin(inputEmail, inputPw)
+
         }
     }
 
