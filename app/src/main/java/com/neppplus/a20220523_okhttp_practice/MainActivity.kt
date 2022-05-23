@@ -2,8 +2,13 @@ package com.neppplus.a20220523_okhttp_practice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.neppplus.a20220523_okhttp_practice.databinding.ActivityMainBinding
+import com.neppplus.a20220523_okhttp_practice.utils.ServerUtil
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding.loginBtn.setOnClickListener {
             val inputEmail = binding.emailEdt.text.toString()
             val inputPw = binding.passwordEdt.text.toString()
+
         }
     }
 
