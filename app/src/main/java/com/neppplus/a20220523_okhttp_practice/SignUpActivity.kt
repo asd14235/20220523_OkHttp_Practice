@@ -17,7 +17,9 @@ class SignUpActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-
+        binding.signUpBtn.setOnClickListener { 
+//            회원가입을 함수가 실행
+        }
     }
 
     override fun setValues() {
