@@ -1,23 +1,20 @@
 package com.neppplus.a20220523_okhttp_practice
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.neppplus.a20220523_okhttp_practice.databinding.ActivityMainBinding
+import com.neppplus.a20220523_okhttp_practice.databinding.ActivityLoginBinding
 import com.neppplus.a20220523_okhttp_practice.utils.ServerUtil
-import okhttp3.*
 import org.json.JSONObject
-import java.io.IOException
 
-class MainActivity : BaseActivity() {
+class LoginActivity : BaseActivity() {
 
-    lateinit var binding : ActivityMainBinding
+    lateinit var binding : ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         setupEvents()
         setValues()
     }
