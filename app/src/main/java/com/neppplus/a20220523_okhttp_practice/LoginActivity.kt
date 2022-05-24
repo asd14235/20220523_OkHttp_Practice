@@ -1,10 +1,12 @@
 package com.neppplus.a20220523_okhttp_practice
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.neppplus.a20220523_okhttp_practice.databinding.ActivityLoginBinding
+import com.neppplus.a20220523_okhttp_practice.utils.ContextUtil
 import com.neppplus.a20220523_okhttp_practice.utils.ServerUtil
 import org.json.JSONObject
 
@@ -20,6 +22,14 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+//
+        binding.autoLoginChk.setOnCheckedChangeListener { buttonView, isChecked ->
+            ContextUtil.setAutoLogin(mContext,isChecked)
+
+
+        }
+
+
         binding.signUpBtn.setOnClickListener {
             val myIntent = Intent(mContext, SignUpActivity::class.java)
             startActivity(myIntent)
@@ -41,6 +51,9 @@ class LoginActivity : BaseActivity() {
                         val dataObj = jsonObj.getJSONObject("data")
                         val userObj = dataObj.getJSONObject("user")
                         val nickname = userObj.getString("nick_name")
+                        val token = dataObj.getString("token")
+
+                        ContextUtil.setLoginToken(mContext, token)
 
 
                         runOnUiThread {
@@ -66,6 +79,8 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
+        binding.autoLoginChk.isChecked = ContextUtil.getAutoLogin(mContext)
 
     }
 }

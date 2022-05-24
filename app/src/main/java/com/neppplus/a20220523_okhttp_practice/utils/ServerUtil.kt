@@ -1,5 +1,6 @@
 package com.neppplus.a20220523_okhttp_practice.utils
 
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import okhttp3.*
@@ -169,6 +170,35 @@ class ServerUtil {
                     handler?.onResponse(jsonObj)
                 }
             })
+        }
+
+        // 사용자 정보 조회 (Token 값의 유효성 검사 )
+
+        fun getRequestUserInfo(context: Context, handler: JsonResponseHandler?) {
+            val token = ContextUtil.getLoginToken(context)
+            val urlString = "${BASE_URL}/user"
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token",token)
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+
+                }
+            })
+
+
+        }
+        fun getRequestUserIngo() {
+
         }
     }
 
