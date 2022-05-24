@@ -54,9 +54,28 @@ class SignUpActivity : BaseActivity() {
                 }
             })
         }
+
+        binding.dupEmailBtn.setOnClickListener {
+            val inputEmail = binding.emailEdt.text.toString()
+            checkDuplicate("EMAIL", inputEmail)
+        }
+
+        binding.dupNickBtn.setOnClickListener {
+            val inputNick = binding.nicknameEdt.text.toString()
+            checkDuplicate("NICK_NAME", inputNick)
+        }
     }
 
     override fun setValues() {
 
+    }
+
+    fun checkDuplicate(type : String, value : String) {
+//        타입에 따른 중복 검사를 진행
+        ServerUtil.getRequestUserCheck(type, value, object : ServerUtil.Companion.JsonResponseHandler{
+            override fun onResponse(jsonObj: JSONObject) {
+
+            }
+        })
     }
 }
