@@ -66,7 +66,7 @@ class ServerUtil {
 
                     val bodyString =
                         response.body!!.string()  // OkHttp는 toString 사용시 이상하게 출력! 꼭!! .string()을 활용해서 작업진행
-                    val jsonObj = JSONObject(bodyString)  // .string() 1회용 딱 한번만 사용할 수 있다.
+                    val jsonObj = JSONObject(bodyString)  // 1회용 딱 한번만 사용할 수 있다.
 
                     Log.d("서버테스트", jsonObj.toString())
 
@@ -191,6 +191,8 @@ class ServerUtil {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
+                    val jsonObj = JSONObject(response.body!!.string())
+                    handler?.onResponse(jsonObj)
 
                 }
             })
@@ -198,6 +200,54 @@ class ServerUtil {
 
         }
         fun getRequestUserIngo() {
+
+        }
+
+        fun getRequestMainInfo(context: Context, handler : JsonResponseHandler? ) {
+            val token = ContextUtil.getLoginToken(context)
+            val urlString = "${BASE_URL}/v2/main_info"
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token",token)
+                .build()
+
+            val client = OkHttpClient()
+            client.newCall(request).enqueue(object : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val jsonObj = JSONObject(response.body!!.string())
+                    handler?.onResponse(jsonObj)
+
+                }
+            })
+
+        }
+
+        fun getTopicDetail(context: Context,topicId : Int, handler : JsonResponseHandler? ) {
+            val token = ContextUtil.getLoginToken(context)
+            val urlString = "${BASE_URL}/topic/${topicId}"
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token",token)
+                .build()
+
+            val client = OkHttpClient()
+            client.newCall(request).enqueue(object : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val jsonObj = JSONObject(response.body!!.string())
+                    handler?.onResponse(jsonObj)
+
+                }
+            })
 
         }
     }
