@@ -23,10 +23,13 @@ class TopicData : Serializable {
             topicData.imageUrl = jsonObj.getString("img_url")
             topicData.replyCount = jsonObj.getInt("reply_count")
 
-            val SideArr = jsonObj.getJSONArray("sides")
+            val sideArr = jsonObj.getJSONArray("sides")
 
-            for ( i in 0 until SideArr.length()) {
+            for ( i in 0 until sideArr.length()) {
+                val sideObj = sideArr.getJSONObject(i)
+                val sideData = SideData.getSideDataFromJson(sideObj)
 
+                topicData.sideList.add(sideData)
             }
             return topicData
         }
