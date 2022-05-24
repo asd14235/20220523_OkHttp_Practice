@@ -61,12 +61,12 @@ class MainActivity : BaseActivity() {
                     //               ㄴ Json 파싱의 {} -> JSONArray -> JsonObject로 추출
                     Log.d("받아낸 주제",topicObj.toString())
 
-                    val topicData = TopicData()
-                    topicData.id = topicObj.getInt("id")
-                    topicData.title = topicObj.getString("title")
-                    topicData.imageUrl = topicObj.getString("img_url")
-                    topicData.replyCount = topicObj.getInt("reply_count")
-
+//                    val topicData = TopicData()
+//                    topicData.id = topicObj.getInt("id")
+//                    topicData.title = topicObj.getString("title")
+//                    topicData.imageUrl = topicObj.getString("img_url")
+//                    topicData.replyCount = topicObj.getInt("reply_count")
+                    val topicData = TopicData.getTopicDataFromJson(topicObj)
                     mTopicList.add (topicData)
 
                     runOnUiThread {

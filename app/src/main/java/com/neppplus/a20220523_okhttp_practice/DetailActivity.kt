@@ -19,7 +19,7 @@ class DetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
-        var mTopicData = intent.getSerializableExtra("topicData") as TopicData
+        mTopicData = intent.getSerializableExtra("topicData") as TopicData
         setupEvents()
         setValues()
 
@@ -31,32 +31,41 @@ class DetailActivity : BaseActivity() {
         // 서버에 전달 -> API 활용
 
         binding.vote1Btn.setOnClickListener {
+            voteSide(mTopicData.sideList[0].id)
+        }
+        binding.vote2Btn.setOnClickListener {
+          voteSide(mTopicData.sideList[1].id)
+        }
+    }
+    override fun setValues() {
 
-            // 서버의 투표 API 호출
+        setTopicDataToUI()
+        getTopicDetailFromServer()
 
-            ServerUtil.postRequestVote(mContext, mTopicData.sideList[0].id, object : ServerUtil.Companion.JsonResponseHandler{
+    }
+
+        fun getTopicDetailFromServer() {
+            ServerUtil.postRequestVote(mContext, mTopicData.id, object : ServerUtil.Companion.JsonResponseHandler{
                 override fun onResponse(jsonObj: JSONObject) {
                     val message = jsonObj.getString("message")
                     val code = jsonObj.getInt("code")
 
-                    Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show()
 
-                    if ( code == 200 ) {
-                        val dataObjects = jsonObj.getJSONObject("data")
-                        val topicObjects = dataObjects.getJSONObject("topic")
+                    runOnUiThread { Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show()
 
-                        mTopicData = TopicData.getTopicDataFromJson(topicObjects)
+                        if ( code == 200 ) {
+                            val dataObjects = jsonObj.getJSONObject("data")
+                            val topicObjects = dataObjects.getJSONObject("topic")
 
-                        setTopicDataToUI()
-                    }
+                            mTopicData = TopicData.getTopicDataFromJson(topicObjects)
+
+                            setTopicDataToUI()
+                        } }
 
                 }
             })
+
         }
-
-    }
-
-
 
     fun getTopicDetail () {
         ServerUtil.getTopicDetail(mContext, mTopicData.id, object : ServerUtil.Companion.JsonResponseHandler{
@@ -79,5 +88,34 @@ class DetailActivity : BaseActivity() {
         binding.side2Txt.text = mTopicData.sideList[1].title
         binding.vote1CountTxt.text = "${mTopicData.sideList[0].voteCount}표"
         binding.vote2CountTxt.text = "${mTopicData.sideList[1].voteCount}표"
+
     }
+    fun voteSide ( sideId : Int ) {
+        ServerUtil.postRequestVote(mContext,sideId, object  : ServerUtil.Companion.JsonResponseHandler{
+            override fun onResponse(jsonObj: JSONObject) {
+                val code = jsonObj.getInt("code")
+                val message = jsonObj.getString("message")
+
+                runOnUiThread {
+                    Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show()
+
+                    if ( code == 200 ) {
+                        val dataObj = jsonObj.getJSONObject("data")
+                        val topicObj = dataObj.getJSONObject("topic")
+                        mTopicData = TopicData.getTopicDataFromJson(topicObj)
+
+                        setTopicDataToUI()
+                    }
+                }
+
+            }
+
+        })
+    }
+
+
 }
+
+
+
+

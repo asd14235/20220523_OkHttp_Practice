@@ -17,7 +17,7 @@ class SideData : Serializable {
             sideData.id = jsonObject.getInt("id")
             sideData.title = jsonObject.getString("title")
 
-            sideData.voteCount = jsonObject.getInt("reply_count")
+            sideData.voteCount = jsonObject.getInt("vote_count")
 
             return sideData
         }

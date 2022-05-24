@@ -199,9 +199,7 @@ class ServerUtil {
 
 
         }
-        fun getRequestUserIngo() {
 
-        }
 
         fun getRequestMainInfo(context: Context, handler : JsonResponseHandler? ) {
             val token = ContextUtil.getLoginToken(context)
@@ -273,6 +271,7 @@ class ServerUtil {
 
                 override fun onResponse(call: Call, response: Response) {
                     val jsonObj = JSONObject(response.body!!.string())
+                    handler?.onResponse(jsonObj)
 
                 }
 

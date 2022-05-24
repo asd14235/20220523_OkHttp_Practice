@@ -6,6 +6,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     val mContext = this
 
+    val TAG = javaClass.simpleName
+
     abstract fun setupEvents()
     abstract fun setValues()
 
