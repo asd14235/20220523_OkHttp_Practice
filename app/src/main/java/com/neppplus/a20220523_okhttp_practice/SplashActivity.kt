@@ -43,17 +43,17 @@ class SplashActivity : BaseActivity() {
                               //           ㄴ 유효성 확인
 
 
+            val myIntent : Intent
 
             if (isAutoLoginOk && isTokenOk ) {
-                val myIntent = Intent(mContext, MainActivity::class.java)
-                startActivity(myIntent)
-                finish()
+                myIntent = Intent(mContext, MainActivity::class.java)
             }
             else {
-                val myIntent = Intent(mContext, LoginActivity::class.java)
-                startActivity(myIntent)
-                finish()
+                myIntent = Intent(mContext, LoginActivity::class.java)
+
             }
+            startActivity(myIntent)
+            finish()
 
 
         },2500)
